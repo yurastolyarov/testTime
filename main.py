@@ -8,18 +8,19 @@ arr_main = np.random.randint(-100, 100, N)  # создаем и заполняе
 # создаем 3-и копии массива arr_main для 3-х разных сортировок
 
 arr_bubble = arr_main.copy()  # для сортировки пузырьком
-arr_quickSort = arr_main.copy()  # для быстрой сортировки
 arr_insertionSort = arr_main.copy()  # для сортировки вставками
+arr_quickSort = arr_main.copy()  # для быстрой сортировки
 
 
 # создаем функцию для рассчета времени работы сортировок. (Декоратор)
 
 def testTime(func):
-    def wrapper(*args):
+    def wrapper(*args, **kwargs):
         start_time = time.time()
-        func(*args)
+        result = func(*args, **kwargs)
         dt = time.time() - start_time
         print(f"Время работы: {dt} сек")
+        return result
 
     return wrapper
 
@@ -35,6 +36,7 @@ def bubble(arr_bubble):
         for j in range(N - i - 1):
             if arr_bubble[j] > arr_bubble[j + 1]:
                 arr_bubble[j], arr_bubble[j + 1] = arr_bubble[j + 1], arr_bubble[j]
+
 
 bubble(arr_bubble)
 
@@ -62,6 +64,7 @@ print('------------------------')
 print("<Быстрая сортировка>")
 
 
+# @testTime
 def quick_sort(arr_quickSort):
     if len(arr_quickSort) <= 1:
         return arr_quickSort
@@ -77,4 +80,4 @@ def quick_sort(arr_quickSort):
 
 quicksort_time = time.time()
 Qsorted_arr = quick_sort(arr_quickSort)
-print("Время работы = %.15f сек" % (time.time() - quicksort_time))
+print("Время работы = %.18f сек" % (time.time() - quicksort_time))
